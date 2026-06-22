@@ -405,19 +405,34 @@ async def llm_reasoning_node(state: AgentState) -> dict[str, Any]:
         }
 
     # ── Parse tool call result ─────────────────────────────────────────────────
+    # ── Bonus: Sentiment / frustration detection ───────────────────────────────
+    frustration_keywords = [
+        "frustrated", "angry", "terrible", "worst", "useless",
+        "awful", "horrible", "incompetent", "ridiculous", "furious",
+        "unacceptable", "manager", "human"
+    ]
+    is_frustrated = any(kw in inbound_text.lower() for kw in frustration_keywords)
+    if is_frustrated:
+        logger.warning(f"⚠️ Frustration detected for {state['customer_phone']}")
+
+    def _apply_frustration(ret_dict: dict) -> dict:
+        if is_frustrated:
+            ret_dict["error"] = "NEEDS_HUMAN"
+        return ret_dict
+
     if response.tool_calls:
         tool_call = response.tool_calls[0]
         tool_name = tool_call["name"]
         tool_args = tool_call["args"]
 
         if tool_name == "reply_with_text":
-            return {
+            return _apply_frustration({
                 "llm_response": tool_args.get("message", ""),
                 "response_type": "text",
                 "media_asset_key": None,
                 "media_url": None,
                 "media_filename": None,
-            }
+            })
 
         elif tool_name == "send_catalog_pdf":
             asset_key = tool_args.get("asset_key", "")
@@ -426,21 +441,21 @@ async def llm_reasoning_node(state: AgentState) -> dict[str, Any]:
 
             if not media_url:
                 # Asset not found — fallback to text
-                return {
+                return _apply_frustration({
                     "llm_response": f"I'm sorry, I couldn't find the {asset_key} in our library. {caption}",
                     "response_type": "text",
                     "media_asset_key": None,
                     "media_url": None,
                     "media_filename": None,
-                }
+                })
 
-            return {
+            return _apply_frustration({
                 "llm_response": caption,
                 "response_type": "document",
                 "media_asset_key": asset_key,
                 "media_url": media_url,
                 "media_filename": f"{asset_key}.pdf",
-            }
+            })
 
         elif tool_name == "send_image_asset":
             asset_key = tool_args.get("asset_key", "")
@@ -448,49 +463,32 @@ async def llm_reasoning_node(state: AgentState) -> dict[str, Any]:
             media_url = media_library.get(asset_key)
 
             if not media_url:
-                return {
+                return _apply_frustration({
                     "llm_response": f"I'm sorry, I couldn't find an image for {asset_key}. {caption}",
                     "response_type": "text",
                     "media_asset_key": None,
                     "media_url": None,
                     "media_filename": None,
-                }
+                })
 
-            return {
+            return _apply_frustration({
                 "llm_response": caption,
                 "response_type": "image",
                 "media_asset_key": asset_key,
                 "media_url": media_url,
                 "media_filename": None,
-            }
+            })
 
     # No tool call — LLM returned a direct text response
     text_content = _extract_text(response.content)
 
-    # ── Bonus: Sentiment / frustration detection ───────────────────────────────
-    frustration_keywords = [
-        "frustrated", "angry", "terrible", "worst", "useless",
-        "awful", "horrible", "incompetent", "ridiculous", "furious",
-        "unacceptable", "manager", "human"
-    ]
-    if any(kw in inbound_text.lower() for kw in frustration_keywords):
-        logger.warning(f"⚠️ Frustration detected for {state['customer_phone']}")
-        return {
-            "llm_response": text_content,
-            "response_type": "text",
-            "media_asset_key": None,
-            "media_url": None,
-            "media_filename": None,
-            "error": "NEEDS_HUMAN",  # Signal dispatcher to flag this session
-        }
-
-    return {
+    return _apply_frustration({
         "llm_response": text_content,
         "response_type": "text",
         "media_asset_key": None,
         "media_url": None,
         "media_filename": None,
-    }
+    })
 
 
 async def _describe_image_url(image_url: str, auth: tuple | None = None) -> str:
