@@ -5,9 +5,9 @@ A cloud-native, multi-tenant AI agent system that lets multiple businesses handl
 
 ---
 
-## 📌 Table of Contents
+## Table of Contents
 
-1. [🚀 Live Demo — How to Test](#-live-demo--how-to-test)
+1. [Live Demo — How to Test](#-live-demo--how-to-test)
 2. [Project Overview](#-project-overview)
 3. [Why We Use Twilio (Not Meta Direct)](#-why-twilio-instead-of-meta-direct)
 4. [Architecture](#-architecture)
@@ -25,7 +25,7 @@ A cloud-native, multi-tenant AI agent system that lets multiple businesses handl
 
 ---
 
-## 🚀 Live Demo — How to Test
+##  Live Demo — How to Test
 
 > **Everything is already deployed and live. No setup, no accounts, no webhooks needed. Just WhatsApp.**
 
@@ -155,13 +155,13 @@ Switching to Meta requires only:
 
 ---
 
-## 🏗️ Architecture
+## Architecture
 
 ![System Architecture](system_architecture.png)
 
 ---
 
-## 🧠 LangGraph Agent Pipeline
+## LangGraph Agent Pipeline
 
 The agent is modelled as a **stateful directed graph** using LangGraph. Every incoming message flows through exactly 4 nodes in sequence.
 
@@ -208,7 +208,7 @@ class AgentState(TypedDict):
 4. Upserts a `ChatSession` in MongoDB (creates if new, updates timestamp if existing)
 5. Saves the inbound message to `message_audit_log` with `direction=INBOUND`
 
-> **🧠 Evaluator Note on Typing Indicators:** We fully implemented the logic and UX for WhatsApp's `typing_on` indicator. However, because Twilio's API abstracts WhatsApp behind a generic SMS interface, Twilio does *not* natively support sending typing indicators. The code is structured to fire the typing indicator perfectly when connected to Meta's Cloud API, but gracefully degrade (skip the API call) when using the Twilio Sandbox.
+> **Evaluator Note on Typing Indicators:** We fully implemented the logic and UX for WhatsApp's `typing_on` indicator. However, because Twilio's API abstracts WhatsApp behind a generic SMS interface, Twilio does *not* natively support sending typing indicators. The code is structured to fire the typing indicator perfectly when connected to Meta's Cloud API, but gracefully degrade (skip the API call) when using the Twilio Sandbox.
 
 **Why it matters:** Returns a state update before the LLM even starts. The customer sees read receipt + typing indicator within ~100ms of sending their message.
 
@@ -316,7 +316,7 @@ This strict linear DAG ensures the database state is always saved (`acknowledge`
 
 ---
 
-## 🔧 Agent Tools
+##  Agent Tools
 
 The LLM has **3 structured tools** it can call. This is the "agentic" part — the model decides which tool to use based on the conversation.
 
@@ -369,7 +369,7 @@ def send_image_asset(asset_key: str, caption: str) -> str:
 
 ---
 
-## ✨ Features
+##  Features
 
 ### Core Features
 
@@ -399,7 +399,7 @@ def send_image_asset(asset_key: str, caption: str) -> str:
 
 ---
 
-## 🌟 Bonus Features
+##  Bonus Features
 
 ### 1. Webhook Security (X-Hub-Signature-256)
 Every inbound Meta webhook request is validated using HMAC-SHA256:
@@ -445,7 +445,7 @@ Admin can send mass messages via dashboard with:
 
 ---
 
-## 🛠️ Tech Stack
+##  Tech Stack
 
 | Layer | Technology | Why |
 |---|---|---|
@@ -461,7 +461,7 @@ Admin can send mass messages via dashboard with:
 
 ---
 
-## 📁 Project Structure
+## Project Structure
 
 ```
 krid-ai/
@@ -512,7 +512,7 @@ krid-ai/
 
 ---
 
-## 🚀 Quick Start
+##  Quick Start
 
 ### Prerequisites
 - Python 3.11+
@@ -573,7 +573,7 @@ npm run dev
 
 ---
 
-## 🔑 Environment Variables
+##  Environment Variables
 
 ```env
 # ── MongoDB ─────────────────────────────────────────────────────────
@@ -603,7 +603,7 @@ GROQ_API_KEY=gsk_...
 
 ---
 
-## 🏢 Tenants & Business Scenarios
+##  Tenants & Business Scenarios
 
 ### Tenant A — Luxe Haven Furniture
 
@@ -650,7 +650,7 @@ GROQ_API_KEY=gsk_...
 
 ---
 
-## 📡 API Reference
+##  API Reference
 
 | Method | Endpoint | Description |
 |---|---|---|
@@ -664,7 +664,7 @@ GROQ_API_KEY=gsk_...
 
 ---
 
-## ☁️ Deployment
+##  Deployment
 
 ### Docker Compose (Local Full Stack)
 
@@ -703,4 +703,3 @@ gcloud run deploy whatsapp-frontend \
 
 ---
 
-*Built with ❤️ using LangGraph, Google Gemini, FastAPI, and MongoDB*
