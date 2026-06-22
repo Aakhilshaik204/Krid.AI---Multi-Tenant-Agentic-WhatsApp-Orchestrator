@@ -1,4 +1,4 @@
-# 🤖 Multi-Tenant WhatsApp AI Orchestrator
+#  Multi-Tenant WhatsApp AI Orchestrator
 ### Krid.Ai — Enterprise WhatsApp SaaS Platform
 
 A cloud-native, multi-tenant AI agent system that lets multiple businesses handle customer conversations over WhatsApp with full intelligence — sending text, images, and PDF documents, analyzing incoming photos, detecting customer frustration, and monitoring everything from a live dashboard.
