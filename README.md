@@ -592,8 +592,13 @@ WHATSAPP_PHONE_NUMBER_ID=1113267475210652
 WHATSAPP_VERIFY_TOKEN=your_verify_token
 WHATSAPP_APP_SECRET=faf4262c...       # For X-Hub-Signature-256 validation
 
-# ── Twilio credentials are stored per-tenant in MongoDB (not .env) ───
-# See seed.py: twilio_account_sid, twilio_auth_token per tenant
+# ── Twilio Sandbox API ───────────────────────────────────────────────
+TWILIO_ACCOUNT_SID="AC11..."          # Your Twilio Account SID
+TWILIO_AUTH_TOKEN="04cd..."           # Your Twilio Auth Token
+TWILIO_WHATSAPP_NUMBER="whatsapp:..." # Your Twilio Sandbox Number
+
+# ── Groq API (Optional: Fast Llama3 inference) ───────────────────────
+GROQ_API_KEY=gsk_...
 ```
 
 ---
