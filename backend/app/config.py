@@ -16,6 +16,11 @@ class Settings(BaseSettings):
     # Groq (Optional - for AI message generation)
     GROQ_API_KEY: str = ""
 
+    # Twilio (Sandbox configuration)
+    TWILIO_ACCOUNT_SID: str = ""
+    TWILIO_AUTH_TOKEN: str = ""
+    TWILIO_WHATSAPP_NUMBER: str = "whatsapp:+14155238886"
+
 
     @property
     def all_gemini_keys(self) -> list[str]:

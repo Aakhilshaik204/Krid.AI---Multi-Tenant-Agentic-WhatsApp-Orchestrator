@@ -157,60 +157,7 @@ Switching to Meta requires only:
 
 ## 🏗️ Architecture
 
-```
-                        ┌─────────────────────────────────────────┐
-  Customer WhatsApp ───►│  Twilio / Meta Webhook                  │
-                        │  POST /api/webhooks/twilio?tenant=xxx    │
-                        │  POST /api/webhooks/whatsapp             │
-                        │                                         │
-                        │  ✅ Returns 200 OK IMMEDIATELY           │
-                        │     (no waiting for AI response)         │
-                        └──────────────┬──────────────────────────┘
-                                       │  BackgroundTask
-                                       ▼
-                        ┌─────────────────────────────────────────┐
-                        │         LangGraph Pipeline               │
-                        │                                         │
-                        │  1. acknowledge_node                    │
-                        │     ├─ Mark message as read             │
-                        │     ├─ Fire typing indicator            │
-                        │     └─ Save inbound to MongoDB          │
-                        │                                         │
-                        │  2. context_retriever_node              │
-                        │     ├─ Load tenant system prompt        │
-                        │     ├─ Load media library               │
-                        │     ├─ Load product knowledge (catalog) │
-                        │     └─ Fetch last 20 chat messages      │
-                        │                                         │
-                        │  3. llm_reasoning_node (Gemini Flash)   │
-                        │     ├─ Analyze inbound message          │
-                        │     ├─ Analyze images (Gemini Vision)   │
-                        │     ├─ Call tools: text/image/doc       │
-                        │     └─ Detect frustration → NEEDS_HUMAN │
-                        │                                         │
-                        │  4. dispatcher_node                     │
-                        │     ├─ Send reply via correct channel   │
-                        │     ├─ Save outbound to MongoDB         │
-                        │     └─ Update session status            │
-                        └──────────────┬──────────────────────────┘
-                                       │
-                                       ▼
-                        ┌─────────────────────────────────────────┐
-                        │         MongoDB Atlas                    │
-                        │  ● tenants          (config + prompts)  │
-                        │  ● chat_sessions    (status tracking)   │
-                        │  ● message_audit_log (full history)     │
-                        └──────────────┬──────────────────────────┘
-                                       │
-                                       ▼
-                        ┌─────────────────────────────────────────┐
-                        │      React Dashboard (port 5173)         │
-                        │  ● Tenant Switcher                      │
-                        │  ● Live Chat Monitor                    │
-                        │  ● Chat Thread (text + images + PDFs)   │
-                        │  ● Broadcast Campaign Drawer            │
-                        └─────────────────────────────────────────┘
-```
+![System Architecture](system_architecture.png)
 
 ---
 
