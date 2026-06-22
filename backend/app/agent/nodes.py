@@ -470,7 +470,8 @@ async def llm_reasoning_node(state: AgentState) -> dict[str, Any]:
     # ── Bonus: Sentiment / frustration detection ───────────────────────────────
     frustration_keywords = [
         "frustrated", "angry", "terrible", "worst", "useless",
-        "awful", "horrible", "incompetent", "ridiculous", "furious"
+        "awful", "horrible", "incompetent", "ridiculous", "furious",
+        "unacceptable", "manager", "human"
     ]
     if any(kw in inbound_text.lower() for kw in frustration_keywords):
         logger.warning(f"⚠️ Frustration detected for {state['customer_phone']}")
