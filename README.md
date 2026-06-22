@@ -29,6 +29,9 @@ A cloud-native, multi-tenant AI agent system that lets multiple businesses handl
 
 > **Everything is already deployed and live. No setup, no accounts, no webhooks needed. Just WhatsApp.**
 
+> [!NOTE]
+> **Cold Start Warning:** The backend is hosted on a free Render instance which goes to sleep after 15 minutes of inactivity. If you do not receive an instant reply to your first message, please wait up to 60 seconds for the server to wake up. All subsequent replies will be instant.
+
 ---
 
 ### Step 1 — Save the Number
