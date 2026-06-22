@@ -1,0 +1,24 @@
+# Environment variables — NEVER commit these
+.env
+*.env
+
+# Python
+__pycache__/
+*.py[cod]
+venv/
+.venv/
+*.egg-info/
+dist/
+build/
+
+# IDE
+.vscode/
+.idea/
+
+# Logs
+*.log
+
+# Node & Frontend
+node_modules/
+frontend/dist/
+frontend/node_modules/
