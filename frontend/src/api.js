@@ -1,7 +1,12 @@
 import axios from 'axios'
 
+// In production, Render injects VITE_API_URL. Locally, we use Vite's proxy ('/api')
+const baseURL = import.meta.env.VITE_API_URL 
+  ? `${import.meta.env.VITE_API_URL}/api`
+  : '/api';
+
 const api = axios.create({
-  baseURL: '/api',
+  baseURL: baseURL,
   headers: { 'Content-Type': 'application/json' },
 })
 
