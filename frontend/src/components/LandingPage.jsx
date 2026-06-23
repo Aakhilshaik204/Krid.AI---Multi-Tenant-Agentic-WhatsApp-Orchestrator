@@ -55,7 +55,7 @@ const FEATURES = [
   },
   {
     title: 'Real-Time Dashboard',
-    description: 'Monitor every conversation across all tenants — live session list, full chat thread, broadcast campaigns, and escalation alerts.',
+    description: 'Monitor every conversation across all tenants — live session list, full chat thread, AI-powered broadcast campaigns, and escalation alerts.',
     icon: <path strokeLinecap="round" strokeLinejoin="round" d="M3 13.125C3 12.504 3.504 12 4.125 12h2.25c.621 0 1.125.504 1.125 1.125v6.75C7.5 20.496 6.996 21 6.375 21h-2.25A1.125 1.125 0 013 19.875v-6.75zm9.75-9.75c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125v16.5c0 .621-.504 1.125-1.125 1.125h-2.25a1.125 1.125 0 01-1.125-1.125V3.375zm-9.75 9a.75.75 0 01.75-.75h16.5a.75.75 0 010 1.5H3.75a.75.75 0 01-.75-.75z" />,
   },
   {
@@ -206,7 +206,7 @@ function Hero({ onEnterDashboard }) {
                         rounded-full text-xs font-medium text-slate-600 mb-10 shadow-card
                         animate-fade-up" style={{ animationDelay: '0.1s' }}>
           <span className="w-1.5 h-1.5 rounded-full bg-brand-500" />
-          FastAPI · LangGraph · Gemini 2.0 Flash · MongoDB Atlas
+          FastAPI · LangGraph · Gemini 3.1 Flash Lite · MongoDB Atlas
         </div>
 
         {/* Headline */}
@@ -360,7 +360,7 @@ function Architecture() {
         {/* Tech row */}
         <div className="grid md:grid-cols-3 gap-4">
           {[
-            { label: 'AI Engine',      value: 'Google Gemini 2.0 Flash', sub: 'Multimodal · Tool-use · Context window' },
+            { label: 'AI Engine',      value: 'Google Gemini 3.1 Flash Lite', sub: 'Multimodal · Tool-use · Context window' },
             { label: 'Orchestration',  value: 'LangGraph + FastAPI',     sub: 'Async background tasks · Typed state' },
             { label: 'Data Layer',     value: 'MongoDB Atlas',           sub: 'Motor async · Free M0 tier · Indexed' },
           ].map((t, i) => (
@@ -380,12 +380,169 @@ function Architecture() {
   )
 }
 
+/* ─── Analytics Modal ──────────────────────────────────────────────────────── */
+function AnalyticsModal({ onClose }) {
+  return (
+    <div className="fixed inset-0 z-[100] flex items-center justify-center p-4 sm:p-6">
+      <div className="absolute inset-0 bg-slate-900/60 backdrop-blur-sm" onClick={onClose} />
+      <div className="relative w-full max-w-3xl bg-white rounded-2xl shadow-2xl overflow-hidden animate-fade-up">
+        <div className="flex items-center justify-between px-6 py-4 border-b border-slate-100">
+          <h3 className="text-xl font-bold text-slate-900 flex items-center gap-2">
+            <span className="text-2xl"></span> Real-Time Analytics
+          </h3>
+          <button onClick={onClose} className="p-2 text-slate-400 hover:text-slate-600 rounded-lg hover:bg-slate-100 transition-colors">
+            <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+              <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
+            </svg>
+          </button>
+        </div>
+        <div className="p-6 md:p-8 bg-slate-50">
+          <div className="grid md:grid-cols-2 gap-8">
+            <div>
+              <div className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-blue-100 text-blue-700 text-xs font-semibold mb-4">
+                <span className="w-1.5 h-1.5 rounded-full bg-blue-500 animate-pulse-dot" />
+                LIVE DATA
+              </div>
+              <h4 className="text-lg font-bold text-slate-900 mb-2">Track Multi-Tenant Performance</h4>
+              <p className="text-slate-600 text-sm mb-6 leading-relaxed">
+                Monitor the health and efficiency of every AI agent across your entire platform simultaneously. Our centralized dashboard gives you a bird's-eye view of all operations.
+              </p>
+              <ul className="space-y-3">
+                {[
+                  'Track total inbound and outbound message volumes per tenant.',
+                  'Monitor real-time session statuses (Bot Responding, Needs Human, Solved).',
+                  'Identify frustration escalations instantly with live alerts.',
+                ].map((item, i) => (
+                  <li key={i} className="flex items-start gap-2.5 text-sm text-slate-600">
+                    <svg className="w-4 h-4 text-blue-500 mt-0.5 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}>
+                      <path strokeLinecap="round" strokeLinejoin="round" d="M4.5 12.75l6 6 9-13.5" />
+                    </svg>
+                    {item}
+                  </li>
+                ))}
+              </ul>
+            </div>
+            <div className="relative rounded-xl border border-slate-200 bg-white shadow-sm p-5 flex flex-col gap-4">
+              <div className="flex items-center justify-between">
+                <span className="text-sm font-semibold text-slate-700">Platform Overview</span>
+                <span className="text-xs text-green-500 bg-green-50 px-2 py-0.5 rounded-md font-medium flex items-center gap-1">
+                  <span className="w-1.5 h-1.5 bg-green-500 rounded-full animate-pulse" /> Live
+                </span>
+              </div>
+              <div className="grid grid-cols-2 gap-3">
+                <div className="bg-slate-50 rounded-lg p-3 border border-slate-100">
+                  <div className="text-xs text-slate-500 mb-1">Total Messages</div>
+                  <div className="text-xl font-bold text-slate-800">1,204</div>
+                </div>
+                <div className="bg-slate-50 rounded-lg p-3 border border-slate-100">
+                  <div className="text-xs text-slate-500 mb-1">Active Sessions</div>
+                  <div className="text-xl font-bold text-brand-600">42</div>
+                </div>
+                <div className="bg-slate-50 rounded-lg p-3 border border-slate-100">
+                  <div className="text-xs text-slate-500 mb-1">AI Resolution</div>
+                  <div className="text-xl font-bold text-green-600">94%</div>
+                </div>
+                <div className="bg-red-50 rounded-lg p-3 border border-red-100">
+                  <div className="text-xs text-red-500 mb-1 flex items-center gap-1">
+                    <svg className="w-3 h-3" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}><path strokeLinecap="round" strokeLinejoin="round" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" /></svg>
+                    Escalations
+                  </div>
+                  <div className="text-xl font-bold text-red-600">3</div>
+                </div>
+              </div>
+              <div className="mt-auto h-12 flex items-end gap-1 border-b border-slate-100 pb-1">
+                <div className="w-1/6 bg-brand-200 rounded-t-sm h-[30%]" />
+                <div className="w-1/6 bg-brand-200 rounded-t-sm h-[50%]" />
+                <div className="w-1/6 bg-brand-300 rounded-t-sm h-[40%]" />
+                <div className="w-1/6 bg-brand-400 rounded-t-sm h-[80%]" />
+                <div className="w-1/6 bg-brand-500 rounded-t-sm h-[60%]" />
+                <div className="w-1/6 bg-brand-600 rounded-t-sm h-[100%]" />
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  )
+}
+
+/* ─── Campaign Modal ─────────────────────────────────────────────────────── */
+function CampaignModal({ onClose }) {
+  return (
+    <div className="fixed inset-0 z-[100] flex items-center justify-center p-4 sm:p-6">
+      <div className="absolute inset-0 bg-slate-900/60 backdrop-blur-sm" onClick={onClose} />
+      <div className="relative w-full max-w-3xl bg-white rounded-2xl shadow-2xl overflow-hidden animate-fade-up">
+        <div className="flex items-center justify-between px-6 py-4 border-b border-slate-100">
+          <h3 className="text-xl font-bold text-slate-900 flex items-center gap-2">
+            <span className="text-2xl"></span> AI-Powered Broadcast Campaigns
+          </h3>
+          <button onClick={onClose} className="p-2 text-slate-400 hover:text-slate-600 rounded-lg hover:bg-slate-100 transition-colors">
+            <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+              <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
+            </svg>
+          </button>
+        </div>
+        <div className="p-6 md:p-8 bg-slate-50">
+          <div className="grid md:grid-cols-2 gap-8">
+            <div>
+              <div className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-brand-100 text-brand-700 text-xs font-semibold mb-4">
+                <span className="w-1.5 h-1.5 rounded-full bg-brand-500 animate-pulse-dot" />
+                NEW AI FEATURE
+              </div>
+              <h4 className="text-lg font-bold text-slate-900 mb-2">Automate Outbound with LLMs</h4>
+              <p className="text-slate-600 text-sm mb-6 leading-relaxed">
+                Stop writing generic marketing messages. Our Orchestrator uses <b>Google Gemini 3.1 Flash Lite</b> to automatically generate highly-personalized, context-aware broadcast campaigns tailored to each tenant's specific audience.
+              </p>
+              <ul className="space-y-3">
+                {[
+                  'Dynamically generate promotional copy based on Tenant context.',
+                  'Maintain brand voice automatically across all campaigns.',
+                  'Instantly dispatch to hundreds of users via WhatsApp Cloud API or Twilio.',
+                ].map((item, i) => (
+                  <li key={i} className="flex items-start gap-2.5 text-sm text-slate-600">
+                    <svg className="w-4 h-4 text-brand-500 mt-0.5 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}>
+                      <path strokeLinecap="round" strokeLinejoin="round" d="M4.5 12.75l6 6 9-13.5" />
+                    </svg>
+                    {item}
+                  </li>
+                ))}
+              </ul>
+            </div>
+            <div className="relative rounded-xl border border-slate-200 bg-white shadow-sm overflow-hidden flex flex-col">
+              <div className="bg-slate-800 px-4 py-2 flex items-center gap-2">
+                 <div className="w-2.5 h-2.5 rounded-full bg-red-400" />
+                 <div className="w-2.5 h-2.5 rounded-full bg-yellow-400" />
+                 <div className="w-2.5 h-2.5 rounded-full bg-green-400" />
+                 <span className="ml-2 text-xs text-slate-400 font-mono">dashboard/broadcast</span>
+              </div>
+              <div className="p-4 flex-1 bg-slate-50 flex flex-col items-center justify-center">
+                 <div className="text-center w-full">
+                   <div className="w-12 h-12 bg-brand-100 text-brand-600 rounded-full flex items-center justify-center mx-auto mb-3 shadow-inner">
+                     <svg className="w-6 h-6 animate-spin-slow" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                       <path strokeLinecap="round" strokeLinejoin="round" d="M9.813 15.904L9 18.75l-.813-2.846a4.5 4.5 0 00-3.09-3.09L2.25 12l2.846-.813a4.5 4.5 0 003.09-3.09L9 5.25l.813 2.846a4.5 4.5 0 003.09 3.09L15.75 12l-2.846.813a4.5 4.5 0 00-3.09 3.09z" />
+                     </svg>
+                   </div>
+                   <div className="text-sm font-semibold text-slate-800 mb-1">Generating Campaign...</div>
+                   <div className="text-xs text-slate-500 mb-4">"Summer Furniture Sale 2026"</div>
+                   <div className="w-3/4 h-1.5 bg-slate-200 rounded-full overflow-hidden mx-auto">
+                     <div className="h-full bg-brand-500 animate-[pulse_1.5s_ease-in-out_infinite]" style={{ width: '75%' }} />
+                   </div>
+                 </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  )
+}
+
 /* ─── CTA ────────────────────────────────────────────────────────────────── */
-function CTASection({ onEnterDashboard }) {
+function CTASection({ onEnterDashboard, onShowCampaignModal, onShowAnalyticsModal }) {
   const [ref, inView] = useInView(0.2)
   return (
     <section className="py-24 px-6" ref={ref}>
-      <div className={`max-w-3xl mx-auto transition-all duration-600
+      <div className={`max-w-4xl mx-auto transition-all duration-600
                        ${inView ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'}`}>
         <div className="relative rounded-2xl overflow-hidden border border-brand-200 p-12 text-center"
              style={{ background: 'linear-gradient(135deg, #f0f4ff 0%, #e8edff 60%, #f0f4ff 100%)' }}>
@@ -399,16 +556,34 @@ function CTASection({ onEnterDashboard }) {
             <h2 className="text-3xl font-bold text-slate-900 mb-4">Ready to explore?</h2>
             <p className="text-slate-500 mb-8 max-w-md mx-auto">
               Open the dashboard to monitor sessions, view conversations in real time,
-              and manage broadcast campaigns across all tenants.
+              and manage AI-generated broadcast campaigns across all tenants.
             </p>
-            <button id="cta-dashboard-btn" onClick={onEnterDashboard}
-                    className="btn-primary btn-lg mx-auto"
-                    style={{ boxShadow: '0 0 24px rgba(69,80,232,0.3), 0 4px 12px rgba(69,80,232,0.2)' }}>
-              Open Dashboard
-              <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
-                <path strokeLinecap="round" strokeLinejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3" />
-              </svg>
-            </button>
+            <div className="flex flex-col sm:flex-row items-center justify-center gap-3">
+              <button onClick={onShowCampaignModal}
+                      className="btn-secondary btn-lg flex items-center gap-2">
+                <svg className="w-4 h-4 text-brand-500" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M9.813 15.904L9 18.75l-.813-2.846a4.5 4.5 0 00-3.09-3.09L2.25 12l2.846-.813a4.5 4.5 0 003.09-3.09L9 5.25l.813 2.846a4.5 4.5 0 003.09 3.09L15.75 12l-2.846.813a4.5 4.5 0 00-3.09 3.09z" />
+                </svg>
+                AI Broadcast Demo
+              </button>
+              
+              <button id="cta-dashboard-btn" onClick={onEnterDashboard}
+                      className="btn-primary btn-lg"
+                      style={{ boxShadow: '0 0 24px rgba(69,80,232,0.3), 0 4px 12px rgba(69,80,232,0.2)' }}>
+                Open Dashboard
+                <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3" />
+                </svg>
+              </button>
+
+              <button onClick={onShowAnalyticsModal}
+                      className="btn-secondary btn-lg flex items-center gap-2">
+                <svg className="w-4 h-4 text-blue-500" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M3 13.125C3 12.504 3.504 12 4.125 12h2.25c.621 0 1.125.504 1.125 1.125v6.75C7.5 20.496 6.996 21 6.375 21h-2.25A1.125 1.125 0 013 19.875v-6.75zm9.75-9.75c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125v16.5c0 .621-.504 1.125-1.125 1.125h-2.25a1.125 1.125 0 01-1.125-1.125V3.375zm-9.75 9a.75.75 0 01.75-.75h16.5a.75.75 0 010 1.5H3.75a.75.75 0 01-.75-.75z" />
+                </svg>
+                Analytics Demo
+              </button>
+            </div>
           </div>
         </div>
       </div>
@@ -423,7 +598,7 @@ function Footer() {
       <div className="max-w-6xl mx-auto flex flex-col md:flex-row items-center justify-between gap-4">
         <Logo />
         <p className="text-xs text-slate-400">
-          Built with FastAPI · LangGraph · Gemini 2.0 Flash · MongoDB · React + Vite
+          Built with FastAPI · LangGraph · Gemini 3.1 Flash Lite · MongoDB · React + Vite
         </p>
         <div className="flex items-center gap-1.5 text-xs text-slate-400">
           <span className="w-1.5 h-1.5 rounded-full bg-green-400 animate-pulse-dot" />
@@ -436,6 +611,9 @@ function Footer() {
 
 /* ─── Export ─────────────────────────────────────────────────────────────── */
 export default function LandingPage({ onEnterDashboard }) {
+  const [showCampaignModal, setShowCampaignModal] = useState(false)
+  const [showAnalyticsModal, setShowAnalyticsModal] = useState(false)
+
   return (
     <div className="min-h-screen bg-slate-50 page-enter">
       <Navbar onEnterDashboard={onEnterDashboard} />
@@ -443,8 +621,14 @@ export default function LandingPage({ onEnterDashboard }) {
       <Stats />
       <Features />
       <Architecture />
-      <CTASection onEnterDashboard={onEnterDashboard} />
+      <CTASection 
+        onEnterDashboard={onEnterDashboard} 
+        onShowCampaignModal={() => setShowCampaignModal(true)} 
+        onShowAnalyticsModal={() => setShowAnalyticsModal(true)}
+      />
       <Footer />
+      {showCampaignModal && <CampaignModal onClose={() => setShowCampaignModal(false)} />}
+      {showAnalyticsModal && <AnalyticsModal onClose={() => setShowAnalyticsModal(false)} />}
     </div>
   )
 }
